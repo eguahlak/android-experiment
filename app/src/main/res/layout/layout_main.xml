@@ -6,9 +6,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
     <TextView
+        android:id="@+id/helloText"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Hello there"
+        />
+    <Button
+        android:id="@+id/goButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/goButtonText"
+        android:onClick="doGo"
         />
     <fragment
         android:id="@+id/personFragment"

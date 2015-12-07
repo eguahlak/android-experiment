@@ -18,6 +18,9 @@ public class Main extends AppCompatActivity {
         setContentView(R.layout.layout_main);
         }
 
+    public void doGo(View view) {
+        startActivity(new Intent(this, DestinationActivity.class));
+        }
 
     public void savePerson(View view) {
         Toast.makeText(this, "Person info saved ...", Toast.LENGTH_SHORT).show();

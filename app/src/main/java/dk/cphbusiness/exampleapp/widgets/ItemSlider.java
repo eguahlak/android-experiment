@@ -1,46 +1,57 @@
 package dk.cphbusiness.exampleapp.widgets;
 
 import android.content.Context;
-import android.opengl.GLSurfaceView;
+import android.graphics.Color;
 import android.support.v4.view.MotionEventCompat;
-import android.support.v7.app.AppCompatActivity;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.widget.TextView;
+import static java.lang.Math.*;
 
 /**
  * Created by AKA on 24/11/15.
  */
 public class ItemSlider extends TextView {
     private static final String TAG = "ItemSlider";
+    private float downX = Float.MIN_VALUE;
+    private boolean down = false;
+    private float limit;
 
     public ItemSlider(Context context, AttributeSet attrs) {
         super(context, attrs);
         }
 
 
+
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-        Log.d(TAG, " " + event.getX() + " " + event.getY());
+        limit = getWidth()/3;
+
+        float x = event.getX();
+
         int action = MotionEventCompat.getActionMasked(event);
         String text = getText().toString();
         switch(action) {
             case (MotionEvent.ACTION_DOWN) :
-                Log.d(TAG,"Action was DOWN on "+text);
+                down = true;
                 return true;
             case (MotionEvent.ACTION_MOVE) :
-                Log.d(TAG,"Action was MOVE on "+text);
+                if (!down) return true;
+                float move = abs(x - downX);
+
+                if (move < limit) setBackgroundColor(Color.WHITE);
+                else if (move < 2*limit) setBackgroundColor(Color.YELLOW);
+                else setBackgroundColor(Color.RED);
+
                 return true;
             case (MotionEvent.ACTION_UP) :
-                Log.d(TAG,"Action was UP");
+                down = false;
                 return true;
             case (MotionEvent.ACTION_CANCEL) :
-                Log.d(TAG,"Action was CANCEL");
+                down = false;
                 return true;
             case (MotionEvent.ACTION_OUTSIDE) :
-                Log.d(TAG,"Movement occurred outside bounds " +
-                        "of current screen element");
                 return true;
             default :
                 return super.onTouchEvent(event);
